@@ -3,7 +3,10 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField]
-    private float rotationSpeed = 10;
+    private float thrust = 150;
+
+    [SerializeField]
+    private float rotationSpeed = 30;
 
     private Rigidbody playerRigidBody;
     private void Start()
@@ -13,21 +16,42 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        var axisHorizontal = Input.GetAxis("Horizontal");        
+        var axisHorizontal = Input.GetAxis("Horizontal");  
+        Debug.Log($"input value: {axisHorizontal}");
         if (axisHorizontal != 0) 
         {
-            if (axisHorizontal > 0) {
-            //right
-            Vector3 rotationForce =  Vector3.forward * 1 * Time.deltaTime;
-                playerRigidBody.AddRelativeForce(rotationForce);
+            if (axisHorizontal > 0)
+            {
+                RotateRight();
             }
-            
-            else {
-            //left
-                Vector3 rotationForce =  new Vector3(0, axisHorizontal * rotationSpeed *  Time.deltaTime, 0);
-                playerRigidBody.AddRelativeForce(rotationForce);
+            else
+            {
+                RotateLeft();
             }
-           
+
         }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Thrust();
+        }
+
+    }
+
+    private void Thrust()
+    {
+        playerRigidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
+    }
+
+    private void RotateLeft()
+    {
+        Vector3 rotateLeft = Vector3.forward * rotationSpeed * Time.deltaTime;
+        this.transform.Rotate(rotateLeft);
+    }
+
+    private void RotateRight()
+    {
+        Vector3 rotateRight = -Vector3.forward * rotationSpeed * Time.deltaTime;
+        this.transform.Rotate(rotateRight);
     }
 }
