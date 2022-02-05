@@ -16,8 +16,7 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        var axisHorizontal = Input.GetAxis("Horizontal");  
-        Debug.Log($"input value: {axisHorizontal}");
+        var axisHorizontal = Input.GetAxis("Horizontal");
         if (axisHorizontal != 0) 
         {
             if (axisHorizontal > 0)
