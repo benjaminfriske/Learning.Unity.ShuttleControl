@@ -7,11 +7,15 @@ public class Movement : MonoBehaviour
 
     [SerializeField]
     private float rotationSpeed = 30;
+    [SerializeField]
+    private AudioClip thrustSoundClip;
 
     private Rigidbody playerRigidBody;
+    private AudioSource playerAudioSource;
     private void Start()
     {
         playerRigidBody =  this.gameObject.GetComponent<Rigidbody>();
+        playerAudioSource = this.gameObject.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -21,18 +25,27 @@ public class Movement : MonoBehaviour
         {
             if (axisHorizontal > 0)
             {
-                RotateRight();
+                Rotate(-rotationSpeed);
             }
             else
             {
-                RotateLeft();
+                Rotate(rotationSpeed);
             }
 
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !playerAudioSource.isPlaying)
         {
+            playerAudioSource.PlayOneShot(thrustSoundClip);
             Thrust();
+            
+        }
+        else if (Input.GetKey(KeyCode.Space) && playerAudioSource.isPlaying) {
+            Thrust();
+        }
+        else
+        {
+            playerAudioSource.Stop();
         }
 
     }
@@ -42,15 +55,11 @@ public class Movement : MonoBehaviour
         playerRigidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
     }
 
-    private void RotateLeft()
+    private void Rotate(float rotationThisFrame)
     {
-        Vector3 rotateLeft = Vector3.forward * rotationSpeed * Time.deltaTime;
+        playerRigidBody.freezeRotation = true;
+        Vector3 rotateLeft = Vector3.forward * rotationThisFrame * Time.deltaTime;
         this.transform.Rotate(rotateLeft);
-    }
-
-    private void RotateRight()
-    {
-        Vector3 rotateRight = -Vector3.forward * rotationSpeed * Time.deltaTime;
-        this.transform.Rotate(rotateRight);
+        playerRigidBody.freezeRotation = false;
     }
 }
