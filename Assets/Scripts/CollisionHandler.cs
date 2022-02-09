@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
@@ -17,12 +18,14 @@ public class CollisionHandler : MonoBehaviour
             {
                 case "obstacle" :  {
                     this.explosion.Play();
-                    GameOver();
+                    this.gameOver = true;
+                    this.Invoke("ResetLevel", 3f);
                     break;
                 }
                 case "finish" :  {
                     this.finish.Play();
-                    GameOver();
+                    this.gameOver = true;
+                    this.Invoke("NextLevel", 3f);
                     break;
                 }
                 default : {
@@ -32,14 +35,17 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
-    private void GameOver()
-    {
-        this.gameOver = true;
-        this.Invoke("ResetLevel", 5f);
-    }
-
     private void ResetLevel()
     {
-        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void NextLevel()
+    {
+        var nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        Debug.Log($"Current Build Index: {nextIndex}");
+        var nextIndexName = SceneManager.GetSceneByBuildIndex(nextIndex).name;
+        Debug.Log($"Next Build Name: {nextIndexName}");
+        SceneManager.LoadScene(nextIndexName);
     }
 }
