@@ -12,6 +12,10 @@ public class CollisionHandler : MonoBehaviour
     ParticleSystem finish;
 
     private bool gameOver = false;
+
+    private void Start() {
+        
+    }
     private void OnCollisionEnter(Collision other) {
         if (!gameOver) {
             switch(other.gameObject.tag.ToLower()) 
@@ -42,10 +46,13 @@ public class CollisionHandler : MonoBehaviour
 
     private void NextLevel()
     {
-        var nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        Debug.Log($"Current Build Index: {nextIndex}");
-        var nextIndexName = SceneManager.GetSceneByBuildIndex(nextIndex).name;
-        Debug.Log($"Next Build Name: {nextIndexName}");
-        SceneManager.LoadScene(nextIndexName);
+        var sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        var nextIndex = 0; 
+        if (SceneManager.sceneCountInBuildSettings != (sceneIndex + 1)) 
+        {
+            nextIndex = sceneIndex + 1;
+        }
+
+        SceneManager.LoadScene(nextIndex);
     }
 }
