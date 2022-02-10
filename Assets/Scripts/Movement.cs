@@ -3,6 +3,15 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField]
+    private ParticleSystem rightParticle;
+
+    [SerializeField]
+    private ParticleSystem leftParticle;
+
+    [SerializeField]
+    private ParticleSystem upParticle;
+
+    [SerializeField]
     private float thrust = 150;
 
     [SerializeField]
@@ -25,26 +34,34 @@ public class Movement : MonoBehaviour
         {
             if (axisHorizontal > 0)
             {
+                Debug.Log("play particle");
+                this.leftParticle.Play();
                 Rotate(-rotationSpeed);
             }
             else
             {
+                this.rightParticle.Play();
                 Rotate(rotationSpeed);
             }
 
+        }
+        else 
+        {
+            this.rightParticle.Stop();
+            this.leftParticle.Stop();
         }
 
         if (Input.GetKey(KeyCode.Space) && !playerAudioSource.isPlaying)
         {
             playerAudioSource.PlayOneShot(thrustSoundClip);
             Thrust();
-            
         }
         else if (Input.GetKey(KeyCode.Space) && playerAudioSource.isPlaying) {
             Thrust();
         }
         else
         {
+            upParticle.Stop();
             playerAudioSource.Stop();
         }
 
@@ -52,6 +69,7 @@ public class Movement : MonoBehaviour
 
     private void Thrust()
     {
+        upParticle.Play();
         playerRigidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
     }
 

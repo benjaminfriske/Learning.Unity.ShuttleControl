@@ -22,7 +22,7 @@ public class CollisionHandler : MonoBehaviour
 
     private AudioSource playerAudioSource;
     private Movement cachedMovement;
-    private bool gameOver = false;
+    private bool isTransitioning = false;
 
 
     private void Start() {
@@ -30,21 +30,22 @@ public class CollisionHandler : MonoBehaviour
         playerAudioSource = this.gameObject.GetComponent<AudioSource>();
     }
     private void OnCollisionEnter(Collision other) {
-        if (!gameOver) {
+        if (!isTransitioning) {
             switch(other.gameObject.tag.ToLower()) 
             {
                 case "obstacle" :  {
+                     this.isTransitioning = true;
                     this.explosion.Play();
                     playerAudioSource.PlayOneShot(crashAudio);
-                    this.gameOver = true;
                     cachedMovement.enabled = false;
                     this.Invoke("ResetLevel", resetTimer);
                     break;
                 }
                 case "finish" :  {
+                    this.isTransitioning = true;
                     this.finish.Play();
                     playerAudioSource.PlayOneShot(successAudio);
-                    this.gameOver = true;
+                   
                     cachedMovement.enabled = false;
                     this.Invoke("NextLevel", resetTimer);
                     break;
