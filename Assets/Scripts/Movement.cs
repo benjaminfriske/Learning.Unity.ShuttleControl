@@ -43,7 +43,6 @@ public class Movement : MonoBehaviour
                 this.rightParticle.Play();
                 Rotate(rotationSpeed);
             }
-
         }
         else 
         {
@@ -76,8 +75,8 @@ public class Movement : MonoBehaviour
     private void Rotate(float rotationThisFrame)
     {
         playerRigidBody.freezeRotation = true;
-        Vector3 rotateLeft = Vector3.forward * rotationThisFrame * Time.deltaTime;
-        this.transform.Rotate(rotateLeft);
+        Vector3 rotation = Vector3.forward * rotationThisFrame * Time.deltaTime;
+        this.transform.Rotate(rotation);
         playerRigidBody.freezeRotation = false;
     }
 }

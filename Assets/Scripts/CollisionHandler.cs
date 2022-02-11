@@ -23,14 +23,28 @@ public class CollisionHandler : MonoBehaviour
     private AudioSource playerAudioSource;
     private Movement cachedMovement;
     private bool isTransitioning = false;
-
+    private bool collisionsOff = false;
 
     private void Start() {
         cachedMovement = this.GetComponent<Movement>();
         playerAudioSource = this.gameObject.GetComponent<AudioSource>();
     }
-    private void OnCollisionEnter(Collision other) {
-        if (!isTransitioning) {
+
+    private void Update() {
+         if (Input.GetKey(KeyCode.L)) 
+        {
+             NextLevel();
+        }
+
+        if (Input.GetKey(KeyCode.C)) 
+        {
+            collisionsOff = !collisionsOff;
+        }
+    }
+
+    private void OnCollisionEnter(Collision other) 
+    {
+        if (!isTransitioning && !collisionsOff) {
             switch(other.gameObject.tag.ToLower()) 
             {
                 case "obstacle" :  {
