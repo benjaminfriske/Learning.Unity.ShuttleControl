@@ -21,6 +21,8 @@ public class Movement : MonoBehaviour
 
     private Rigidbody playerRigidBody;
     private AudioSource playerAudioSource;
+
+    private bool isThrusting = false;
     private void Start()
     {
         playerRigidBody =  this.gameObject.GetComponent<Rigidbody>();
@@ -35,17 +37,27 @@ public class Movement : MonoBehaviour
             if (axisHorizontal > 0)
             {
                 Debug.Log("play particle");
-                this.leftParticle.Play();
+                if (!isThrusting) 
+                {
+                    this.leftParticle.Play();
+                }
+                
                 Rotate(-rotationSpeed);
             }
             else
             {
-                this.rightParticle.Play();
+                if (!isThrusting) 
+                {
+                    this.rightParticle.Play();
+                }
+                
                 Rotate(rotationSpeed);
             }
+            isThrusting = true;
         }
         else 
         {
+            isThrusting = false;
             this.rightParticle.Stop();
             this.leftParticle.Stop();
         }
@@ -53,6 +65,7 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && !playerAudioSource.isPlaying)
         {
             playerAudioSource.PlayOneShot(thrustSoundClip);
+            upParticle.Play();
             Thrust();
         }
         else if (Input.GetKey(KeyCode.Space) && playerAudioSource.isPlaying) {
@@ -68,7 +81,7 @@ public class Movement : MonoBehaviour
 
     private void Thrust()
     {
-        upParticle.Play();
+        
         playerRigidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
     }
 
