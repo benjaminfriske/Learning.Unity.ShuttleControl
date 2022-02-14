@@ -1436,6 +1436,7 @@ GameObject:
   - component: {fileID: 941723368}
   - component: {fileID: 941723371}
   - component: {fileID: 9066620909623429732}
+  - component: {fileID: 1749652667}
   m_Layer: 0
   m_Name: Player
   m_TagString: Finish
@@ -1637,6 +1638,18 @@ MonoBehaviour:
   crashAudio: {fileID: 8300000, guid: 259cdf2d1e8474807a13567b0dc0f759, type: 3}
   successAudio: {fileID: 8300000, guid: f3b44057b3cbc40cfa4488efd61cb96c, type: 3}
   resetTimer: 2
+--- !u!114 &1749652667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678069034105187208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c94add39b74e48c1a25014793c45c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1468868728390334746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1702,14 +1715,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab79a37535b979f48b6de56e3a0a5cb0, type: 3}
---- !u!4 &1472038285223310848 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4436899185823514, guid: ab79a37535b979f48b6de56e3a0a5cb0, type: 3}
-  m_PrefabInstance: {fileID: 1468868728390334746}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &1630956698705377242 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 198204746014789312, guid: ab79a37535b979f48b6de56e3a0a5cb0, type: 3}
+  m_PrefabInstance: {fileID: 1468868728390334746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1472038285223310848 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4436899185823514, guid: ab79a37535b979f48b6de56e3a0a5cb0, type: 3}
   m_PrefabInstance: {fileID: 1468868728390334746}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3682400899232266964
